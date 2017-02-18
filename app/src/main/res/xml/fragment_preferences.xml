@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <bulgakov.arthur.avitoanalyticsm.content.ListPreferenceCustom
+        android:defaultValue="1"
+        android:entries="@array/string_array_location"
+        android:entryValues="@array/string_array_location_index"
+        android:key="list_preference_location"
+        android:summary="%s"
+        android:title="Ваше местоположение"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="check_box_preference_tracking"
+        android:summary="Автоматически уведомлять о новых объявлениях, подходящих под сохраненные поиски"
+        android:title="Отслеживание"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="check_box_preference_adverts"
+        android:summary="Отсеивать объявления, похожие на рекламные предложения магазинов"
+        android:title="Реклама"/>
+    <EditTextPreference
+        android:defaultValue="10"
+        android:inputType="number"
+        android:key="edit_text_preference_graph_ads_range"
+        android:summary="Размер выборки объявлений для показа по поиску"
+        android:title="Размер выборки объявлений"/>
+    <PreferenceCategory
+        android:key="preference_category_graph"
+        android:title="Настройки отображения визуальной статистики">
+        <EditTextPreference
+            android:defaultValue="@string/default_graph_range"
+            android:inputType="number"
+            android:key="edit_text_preference_graph_range"
+            android:summary="Количество дней назад, начиная с которых отсчитывается временной интервал выборки"
+            android:title="Размер выборки графика"/>
+        <EditTextPreference
+            android:defaultValue="@string/default_graph_ma_num"
+            android:inputType="number"
+            android:key="edit_text_preference_graph_ma"
+            android:summary="Порядок скользящей средней"
+            android:title="Порядок скользящей средней"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Рекомендации покупки и продажи">
+        <Preference
+            android:summary="1. Если прогнозированная цена выше, чем текущая, то покупайте сейчас, а продавайте, когда цена повысится до прогнозируемой.\n\n2. Если прогнозированная цена ниже, чем текущая, то продавайте сейчас, а покупайте, когда цена понизится до прогнозируемой."/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".ActivityMain">
+
+    <item
+        android:id="@+id/fragment0_action_save"
+        android:title="Сохранить"
+        app:showAsAction="always"/>
+
+    <!--<item-->
+        <!--android:id="@+id/fragment0_action_show"-->
+        <!--android:title="Показать"-->
+        <!--app:showAsAction="always"/>-->
+</menu>

@@ -1,0 +1,53 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/tools"
+      xmlns:tools="schemas.android.com/tools"
+      tools:context="com.example.sample.YourActivity">
+    <item
+        android:showAsAction="ifRoom|withText"
+        android:title="Добавить выборки">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/fragment2_action_shop_prices"
+                    android:title="Добавить выборку по магазинам"
+                    app:showAsAction="never"/>
+                <item
+                    android:id="@+id/fragment2_action_avito_del"
+                    android:title="Добавить выборку по удаленным объявлениям"
+                    app:showAsAction="never"/>
+                <item
+                    android:id="@+id/fragment2_action_avito_my"
+                    android:title="Добавить предсказанную выборку"
+                    app:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:showAsAction="ifRoom|withText"
+        android:title="Добавить вспомогательные кривые">
+        <menu>
+            <group>
+                <item
+                    android:id="@+id/fragment2_action_ma_curr"
+                    android:title="Добавить скользящую среднюю по текущим объявлениям"
+                    app:showAsAction="never"/>
+                <item
+                    android:id="@+id/fragment2_action_ma_del"
+                    android:title="Добавить скользящую среднюю по удаленным объявлениям"
+                    app:showAsAction="never"/>
+                <item
+                    android:id="@+id/menu_fragment_preferences_dtw"
+                    android:title="Добавить DTW"
+                    app:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
+    <!--<item-->
+    <!--android:id="@+id/fragment2_action_save_stats"-->
+    <!--android:title="Сохранить статистику"-->
+    <!--app:showAsAction="never"/>-->
+    <item
+        android:id="@+id/fragment2_action_save_graph"
+        android:title="Сохранить график"
+        app:showAsAction="never"/>
+</menu>

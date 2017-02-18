@@ -1,0 +1,33 @@
+<resources>
+    <string name="samples_title">Hello title</string>
+    <string name="samples_subhead">Hello Subhead</string>
+    <string name="samples_hint_username">Username</string>
+    <string name="samples_hint_email">E-Mail</string>
+
+    <!--from avito analytics-res-->
+    <string name="app_name">Авито Аналитика</string>
+    <string name="app_dir">AvitoAnalyticsM</string>
+    <string name="title1">Сохраненные поиски</string>
+    <string name="title2">Избранные объявления</string>
+    <string name="title3">Оценка товара</string>
+    <string name="title4">Настройки</string>
+    <string name="title5">Поиск</string>
+    <string name="title6">Объявления</string>
+    <string name="title7">График</string>
+    <string name="title8">Объявление</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="location">Местоположение:</string>
+    <string name="category">Все категории</string>
+    <string name="subcategory">Подкатегория</string>
+    <string name="good_kind">Вид товара</string>
+    <string name="price_from">Цена, от:</string>
+    <string name="price_to">Цена, до:</string>
+    <string name="wait_ads">Подождите, объявления загружаются</string>
+    <string name="wait_graph">Подождите, график загружается</string>
+    <string name="loaded_ads">Объявления загружены</string>
+    <string name="loaded_graph">График загружен</string>
+
+    <string name="default_graph_range">10</string>
+    <string name="default_graph_ma_num">3</string>
+</resources>

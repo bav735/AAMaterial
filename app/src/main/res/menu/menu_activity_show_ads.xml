@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <!--<item-->
+        <!--android:id="@+id/activity_show_ads_action_graph"-->
+        <!--app:showAsAction="always"-->
+        <!--android:title="График"/>-->
+
+    <!--<item-->
+    <!--android:id="@+id/activity_show_ads_action_load"-->
+    <!--android:showAsAction="always"-->
+    <!--android:title="Загрузить следующую страницу"/>-->
+</menu>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <RadioGroup
+        android:id="@+id/dialog_pick_location_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/dialog_pick_location_rb_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Россия"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/dialog_pick_location_rb_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Москва"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/dialog_pick_location_rb_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Санкт-Петербург"
+            android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/dialog_pick_location_rb_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Казань"
+            android:textSize="18sp"/>
+    </RadioGroup>
+</ScrollView>
