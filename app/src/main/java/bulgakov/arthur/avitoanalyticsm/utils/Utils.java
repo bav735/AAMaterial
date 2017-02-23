@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
@@ -32,12 +34,17 @@ import android.widget.Toast;
 
 import com.jjoe64.graphview.series.DataPoint;
 
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -571,8 +578,12 @@ public class Utils {
             return Constants.SAVED_SEARCH_SIZE_KEY;
          case Constants.FAVOURITE_AD_KEY:
             return Constants.FAVOURITE_AD_SIZE_KEY;
-         default:
+         case Constants.SMS_SENDING_KEY:
+            return Constants.SMS_SENDINGS_SIZE_KEY;
+         case Constants.SAVED_SEARCH_ADS_KEY:
             return Constants.SAVED_SEARCH_ADS_SIZE_KEY;
+         default:
+            return Constants.PHONE_NUMBERS_PARSING_SIZE_KEY;
       }
    }
 
@@ -930,5 +941,84 @@ public class Utils {
       }
 
       return false;
+   }
+
+   public static boolean isMobilePhoneNumber(String mpn) {
+//      mpn = mpn.replace(" ", "").replace("-", "");
+//      String regexStr = "^[0-9]*$";
+//      return mpn.trim().matches(regexStr);
+      return mpn.startsWith("8 9");
+   }
+
+   public static String getFileKey(String elemKey) {
+      if (elemKey.equals(Constants.PHONE_NUMBERS_PARSING_KEY))
+         return Constants.PHONE_NUMBERS_PARSING_FILE;
+      return Constants.SMS_SENDINGS_FILE;
+   }
+
+   public static void initDB(String dbElemKey, Activity activity) {
+      File dbFile = new File(Utils.getAppDir(activity) + "/" + getFileKey(dbElemKey));
+      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+      if (!dbFile.exists()) {
+         try {
+            new File(Utils.getAppDir(activity)).mkdirs();
+            dbFile.createNewFile();
+         } catch (IOException e) {
+            Log.d(Constants.APP_TAG, e.toString());
+         }
+      }
+      if (!prefs.contains(Utils.getSizeKey(dbElemKey))) {
+         StringBuilder dbJson = new StringBuilder();
+         try {
+            BufferedReader br = new BufferedReader(new FileReader(dbFile));
+            String line;
+            while ((line = br.readLine()) != null) {
+               dbJson.append(line);
+               dbJson.append('\n');
+            }
+            br.close();
+            prefs.edit().putInt(Utils.getSizeKey(dbElemKey), 0).commit();
+            if (!dbJson.toString().isEmpty()) {
+               JSONArray jsonArray = new JSONArray(dbJson.toString());
+               for (int i = 0; i < jsonArray.length(); i++)
+                  Utils.addArrayPref(prefs, dbElemKey, jsonArray.getString(i));
+            }
+         } catch (Exception e) {
+            Log.d(Constants.APP_TAG, e.toString());
+            showErrorDialog("Не удалось обработать файл базы данных приложения: " +
+                    dbFile.getAbsolutePath(), activity);
+         }
+      }
+   }
+
+   public static void showErrorDialog(String error, final Activity activity) {
+      new AlertDialog.Builder(activity)
+              .setTitle("Ошибка")
+              .setMessage(error)
+              .setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                    activity.finish();
+                 }
+              }).show();
+   }
+
+   public static void saveToDB(Activity activity, String elemKey) {
+      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+      File db = new File(getAppDir(activity) + "/" + getFileKey(elemKey));
+      JSONArray dbJson = new JSONArray();
+      for (int i = 0; i < prefs.getInt(getSizeKey(elemKey), 0); i++)
+         dbJson.put(prefs.getString(elemKey + i, null));
+      try {
+         FileOutputStream fOut = new FileOutputStream(db);
+         OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+         myOutWriter.append(dbJson.toString());
+         myOutWriter.close();
+         fOut.flush();
+         fOut.close();
+         toast(activity, "сохранение в БД прошло успешно");
+      } catch (IOException e) {
+         Log.d(Constants.APP_TAG, "File write failed: " + e.toString());
+      }
    }
 }

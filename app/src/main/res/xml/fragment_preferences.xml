@@ -12,7 +12,12 @@
         android:defaultValue="false"
         android:key="check_box_preference_tracking"
         android:summary="Автоматически уведомлять о новых объявлениях, подходящих под сохраненные поиски"
-        android:title="Отслеживание"/>
+        android:title="Отслеживание (уведомление)"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="check_box_preference_sms_sending"
+        android:summary="Автоматически отправлять смс по отслеженным объявлениям"
+        android:title="Отслеживание (отправка смс)"/>
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="check_box_preference_adverts"

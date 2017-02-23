@@ -23,6 +23,8 @@
     <string name="good_kind">Вид товара</string>
     <string name="price_from">Цена, от:</string>
     <string name="price_to">Цена, до:</string>
+    <string name="btn_link_name">Авито</string>
+    <string name="btn_phone_number_name">Телефон</string>
     <string name="wait_ads">Подождите, объявления загружаются</string>
     <string name="wait_graph">Подождите, график загружается</string>
     <string name="loaded_ads">Объявления загружены</string>

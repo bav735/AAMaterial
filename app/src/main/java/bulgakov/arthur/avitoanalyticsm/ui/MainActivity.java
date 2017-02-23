@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
    public CharSequence actionBarTitle;
    public static ProgressDialog pd;
    //   private ImageView imageView;
-   private SharedPreferences prefs;
    private NavigationView navigationView;
    private Intent intent;
 
@@ -166,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
       setContentView(R.layout.activity_main);
       setupToolbar();
       Constants.initialize(getApplicationContext());
-
+      Utils.initDB(Constants.PHONE_NUMBERS_PARSING_KEY, this);
+      Utils.initDB(Constants.SMS_SENDING_KEY, this);
       pd = new ProgressDialog(this, R.style.CustomProgressDialog);
       pd.setCancelable(false);
       pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);

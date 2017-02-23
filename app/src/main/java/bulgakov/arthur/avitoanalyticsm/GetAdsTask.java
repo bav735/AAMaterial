@@ -55,6 +55,7 @@ public class GetAdsTask extends AsyncTask<Void, String, String> {
       if (search.priceFrom != -1)
          url += "&pmin=" + search.priceFrom;
       Document doc;
+      Log.d(Constants.APP_TAG, url);
       try {
          doc = Jsoup.connect(url)
                  .userAgent("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36"

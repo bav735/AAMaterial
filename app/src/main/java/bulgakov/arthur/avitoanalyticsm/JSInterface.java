@@ -10,6 +10,7 @@ public class JSInterface {
    OnYMSearchListener onYMSearchListener;
    OnGraphListener onGraphListener;
    OnSellDateListener onSellDateListener;
+   OnGotReceiverNumberListener listener;
 
    public JSInterface(OnPASearchListener l1, OnGraphListener l2) {
       onPASearchListener = l1;
@@ -19,6 +20,16 @@ public class JSInterface {
    public JSInterface(OnYMSearchListener l1, OnSellDateListener l2) {
       onYMSearchListener = l1;
       onSellDateListener = l2;
+   }
+
+   public JSInterface(OnGotReceiverNumberListener l) {
+      listener = l;
+   }
+
+   @JavascriptInterface
+   public void gotNumber(String receiverNumber, String adLink) {
+      if (!receiverNumber.isEmpty())
+         listener.onGotReceiverNumber(receiverNumber, adLink);
    }
 
    @JavascriptInterface
@@ -55,5 +66,9 @@ public class JSInterface {
 
    public interface OnSellDateListener {
       void onSellDate(String sellDate);
+   }
+
+   public interface OnGotReceiverNumberListener {
+      void onGotReceiverNumber(String receiverNumber, String adLink);
    }
 }

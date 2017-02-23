@@ -16,6 +16,14 @@ import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentShowAds;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentShowGraph;
 
 public class Constants {
+   public static final String PHONE_NUMBERS_PARSING_KEY = "phone_numbers_parsing_";
+   public static final String PHONE_NUMBERS_PARSING_SIZE_KEY = "phone_numbers_parsing_size";
+   public static final String PHONE_NUMBERS_PARSING_FILE = "phone_numbers_db.txt";
+
+   public static final String SMS_SENDING_KEY = "sms_sending_";
+   public static final String SMS_SENDINGS_SIZE_KEY = "sms_sendings_size";
+   public static final String SMS_SENDINGS_FILE = "sms_sendings_db.txt";
+
    public static final String ET_GRAPH_RANGE_KEY = "edit_text_preference_graph_range";
    public static final String ET_GRAPH_MA_KEY = "edit_text_preference_graph_ma";
    public static final String ET_ADS_RANGE_KEY = "edit_text_preference_graph_ads_range";

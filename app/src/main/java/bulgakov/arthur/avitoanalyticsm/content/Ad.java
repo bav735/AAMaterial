@@ -1,6 +1,10 @@
 package bulgakov.arthur.avitoanalyticsm.content;
 
+import android.content.Context;
 import android.util.Log;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +12,7 @@ import org.jsoup.nodes.Element;
 
 import java.util.Calendar;
 
+import bulgakov.arthur.avitoanalyticsm.JSInterface;
 import bulgakov.arthur.avitoanalyticsm.utils.Constants;
 import bulgakov.arthur.avitoanalyticsm.utils.Utils;
 
@@ -20,8 +25,8 @@ public class Ad {
    public String description = "";
    public String price = "Цена: ";
    public String url;
-   public String linkText = "Перейти на Авито";
    public String date;
+   public String phoneNumber;
    public int pos;
 
    public Ad() {
@@ -35,7 +40,6 @@ public class Ad {
          description = jsonObject.getString("description");
          price = jsonObject.getString("price");
          url = jsonObject.getString("url");
-         linkText = jsonObject.getString("linkText");
          return this;
       } catch (JSONException e) {
          Log.d(Constants.APP_TAG, "json error from ad");
@@ -58,7 +62,6 @@ public class Ad {
          JSONObject jsonObject = new JSONObject();
          jsonObject.put("title", title);
          jsonObject.put("description", description);
-         jsonObject.put("linkText", linkText);
          jsonObject.put("price", price);
          jsonObject.put("url", url);
          jsonObject.put("date", date);
@@ -155,6 +158,56 @@ public class Ad {
       return true;
    }
 
+   public void getPhoneNumber(Context context, final OnGotMPNListener listener) {
+      final WebView webView = new WebView(context);
+      webView.getSettings().setDomStorageEnabled(true);
+      webView.getSettings().setJavaScriptEnabled(true);
+      webView.getSettings().setLoadsImagesAutomatically(false);
+      webView.addJavascriptInterface(new JSInterface(new JSInterface.OnGotReceiverNumberListener() {
+         @Override
+         public void onGotReceiverNumber(String gotPhoneNumber, String adLink) {
+            Log.d(Constants.APP_TAG, "номер->" + gotPhoneNumber + ", from " + adLink +
+                    ", phone?=" + Utils.isMobilePhoneNumber(gotPhoneNumber));
+            phoneNumber = gotPhoneNumber;
+            listener.onGotMPN(Utils.isMobilePhoneNumber(phoneNumber));
+         }
+      }), "JSInterface");
+      webView.setWebViewClient(new WebViewClient() {
+         @Override
+         public WebResourceResponse shouldInterceptRequest(WebView wv, String url) {
+            if ((url.startsWith("https://m.avito.") || url.startsWith("https://www.avito."))
+                    && !url.contains(".css") && !url.contains("favicon")) {
+               return super.shouldInterceptRequest(wv, url);
+            }
+            return new WebResourceResponse("", "", null);
+         }
+
+         @Override
+         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            Log.d(Constants.APP_TAG, "error: " + errorCode + " " + description + " " + failingUrl);
+            if (failingUrl.contains("tel:")) {
+               phoneNumber = failingUrl.substring(4);
+               listener.onGotMPN(Utils.isMobilePhoneNumber(phoneNumber));
+            }
+         }
+
+         @Override
+         public void onPageFinished(WebView view, String gotUrl) {
+            super.onPageFinished(view, gotUrl);
+            Log.d(Constants.APP_TAG, "link loaded=" + gotUrl);
+            if (gotUrl.equals(url)) {
+               webView.loadUrl("javascript:var e = document.getElementsByClassName('button-text')[0];" +
+                       "e.addEventListener('DOMSubtreeModified', function() {" +
+                       "window.JSInterface.gotNumber(e.innerHTML, '" + gotUrl + "');" +
+                       "}, false);" +
+                       "document.getElementsByClassName('person-action')[0].click();");
+            }
+         }
+      });
+      webView.loadUrl(url);
+   }
+
    /*private String formatPrice(String price) {
       if (price.contains(".") && price.indexOf('.') != price.length() - 1) {
          int i = price.length() - 2;
@@ -164,4 +217,8 @@ public class Ad {
       }
       return price;
    }*/
+
+   public interface OnGotMPNListener {
+      void onGotMPN(boolean gotMobilePhoneNumber);
+   }
 }

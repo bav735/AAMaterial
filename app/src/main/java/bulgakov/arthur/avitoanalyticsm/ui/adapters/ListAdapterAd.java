@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import bulgakov.arthur.avitoanalyticsm.GetAdTask;
+import bulgakov.arthur.avitoanalyticsm.JSInterface;
 import bulgakov.arthur.avitoanalyticsm.R;
 import bulgakov.arthur.avitoanalyticsm.content.Ad;
 import bulgakov.arthur.avitoanalyticsm.ui.MainActivity;
@@ -74,12 +79,17 @@ public class ListAdapterAd extends RecyclerView.Adapter<ListAdapterAd.HolderAd> 
       final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
       final Ad ad = adsList.get(pos);
       holder.tvDescription.setVisibility(View.GONE);
-      holder.btnLink.setText(ad.linkText);
       holder.btnLink.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ad.url));
             activity.startActivity(browserIntent);
+         }
+      });
+      holder.btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            ad.getPhoneNumber(activity);
          }
       });
       holder.btnFavourite.setText("Удалить из избранного");
@@ -137,6 +147,7 @@ public class ListAdapterAd extends RecyclerView.Adapter<ListAdapterAd.HolderAd> 
       public TextView tvPrice;
       public Button btnLink;
       public Button btnFavourite;
+      public Button btnPhoneNumber;
       public TextView tvDate;
 
       public HolderAd(View itemView) {
@@ -146,6 +157,7 @@ public class ListAdapterAd extends RecyclerView.Adapter<ListAdapterAd.HolderAd> 
          tvDescription = (TextView) itemView.findViewById(R.id.list_ads_holder_tv_description);
          btnLink = (Button) itemView.findViewById(R.id.list_ads_holder_btn_link);
          btnFavourite = (Button) itemView.findViewById(R.id.list_ads_holder_btn_favourite);
+         btnPhoneNumber = (Button) itemView.findViewById(R.id.list_ads_holder_btn_phone_number);
          tvPrice = (TextView) itemView.findViewById(R.id.list_ads_holder_tv_price);
          tvTitle = (TextView) itemView.findViewById(R.id.list_ads_holder_tv_title);
       }

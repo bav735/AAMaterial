@@ -33,6 +33,7 @@ public class FragmentPreferences extends PreferenceFragment {
    //   private ListPreferenceCustom location;
 //   private CheckBoxPreference adverts;
    private CheckBoxPreference tracking;
+   private CheckBoxPreference smsSending;
 //   private EditTextPreference graphRangeDays;
 
    public static FragmentPreferences newInstance() {
@@ -72,11 +73,25 @@ public class FragmentPreferences extends PreferenceFragment {
       tracking.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
          @Override
          public boolean onPreferenceChange(Preference preference, Object newValue) {
-            if (tracking.isChecked()) {
+            if (tracking.isChecked() && !smsSending.isChecked()) {
                for (int i = 0; i < prefs.getInt(Constants.SAVED_SEARCH_SIZE_KEY, 0); i++)
                   prefs.edit().remove(Constants.SAVED_SEARCH_ADS_KEY + i).commit();
                Intent serviceIntent = new Intent(getActivity(), ServiceSearchTracking.class);
                getActivity().startService(serviceIntent);
+            }
+            return true;
+         }
+      });
+      smsSending = (CheckBoxPreference) findPreference("check_box_preference_tracking");
+      smsSending.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+         @Override
+         public boolean onPreferenceChange(Preference preference, Object newValue) {
+            if (smsSending.isChecked() && !tracking.isChecked()) {
+               for (int i = 0; i < prefs.getInt(Constants.SAVED_SEARCH_SIZE_KEY, 0); i++)
+                  prefs.edit().remove(Constants.SAVED_SEARCH_ADS_KEY + i).commit();
+               Intent serviceIntent = new Intent(getActivity(), ServiceSearchTracking.class);
+               getActivity().startService(serviceIntent);
+               
             }
             return true;
          }

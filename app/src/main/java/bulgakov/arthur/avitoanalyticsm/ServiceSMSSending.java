@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.webkit.WebView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,18 +25,18 @@ import java.util.Calendar;
 import java.util.HashSet;
 
 import bulgakov.arthur.avitoanalyticsm.content.Ad;
-import bulgakov.arthur.avitoanalyticsm.content.MPNParsed;
 import bulgakov.arthur.avitoanalyticsm.content.Search;
 import bulgakov.arthur.avitoanalyticsm.ui.MainActivity;
 import bulgakov.arthur.avitoanalyticsm.utils.Constants;
 import bulgakov.arthur.avitoanalyticsm.utils.Utils;
 
 
-public class ServiceSearchTracking extends Service {
+public class ServiceSMSSending extends Service {
    private static NotificationManager notificationManager;
    private static SharedPreferences prefs;
    private static Context context;
    private ArrayList<Ad> trackedAdsList;
+   private WebView webView;
 
    public static void sendNotification(JSONArray jsonArray, String error) {
       Log.d(Constants.APP_TAG, "notifyng..");
@@ -105,16 +106,14 @@ public class ServiceSearchTracking extends Service {
       notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
       prefs = PreferenceManager.getDefaultSharedPreferences(context);
       setAlarmManager();
-      boolean isNotify = prefs.getBoolean("check_box_preference_tracking", false);
-      boolean isSendSMS = prefs.getBoolean("check_box_preference_sms_sending", false);
-      if (isNotify || isSendSMS) {
+      if (prefs.getBoolean("check_box_preference_tracking", false)) {
          trackedAdsList = new ArrayList<>();
-         trackSearches(0, isNotify, isSendSMS);
+         trackSearches(0);
       }
       return START_NOT_STICKY;
    }
 
-   private void trackSearches(final int searchNum, final boolean isNotify, final boolean isSendSMS) {
+   private void trackSearches(final int searchNum) {
       int searchesSize = prefs.getInt(Constants.SAVED_SEARCH_SIZE_KEY, 0);
       Log.d(Constants.APP_TAG, "TRACKING#" + searchNum);
       if (searchNum < searchesSize) {
@@ -147,35 +146,25 @@ public class ServiceSearchTracking extends Service {
                   prefs.edit().putString(Constants.SAVED_SEARCH_ADS_KEY + searchNum,
                           jsonArrayIds.toString()).commit();
                }
-               trackSearches(searchNum + 1, isNotify, isSendSMS);
+               trackSearches(searchNum + 1);
             }
          }, 1, search, prefs).execute((Void) null);
       }
       if (searchNum == searchesSize && !trackedAdsList.isEmpty()) {
          JSONArray trackedAdsJson = new JSONArray();
-         if (isSendSMS) {
-            sendSMS();
-         }
          for (Ad ad : trackedAdsList) {
             if (ad.isPresent()) {
                trackedAdsJson.put(ad.toJson());
             }
          }
          if (trackedAdsJson.length() > 0) {
-            if (isNotify) {
-               sendNotification(trackedAdsJson, null);
-            }
+            ServiceSMSSending.sendNotification(trackedAdsJson, null);
          }
       }
    }
 
-   private void sendSMS() {
-      MPNParsed mpnParsed = new MPNParsed().fromJson(prefs.getString(
-              Constants.PHONE_NUMBERS_PARSING_KEY + runningPNPPos, null));
-   }
-
    private void setAlarmManager() {
-      Intent intent = new Intent(context, ServiceSearchTracking.class);
+      Intent intent = new Intent(context, ServiceSMSSending.class);
       PendingIntent pintent = PendingIntent.getService(context, 0, intent, 0);
       AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
       Calendar calendar = Calendar.getInstance();

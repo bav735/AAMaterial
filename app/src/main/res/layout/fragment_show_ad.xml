@@ -49,6 +49,7 @@
 
                 <Button
                     android:id="@+id/fragment_show_ad_btn_link"
+                    android:text="@string/btn_link_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"/>

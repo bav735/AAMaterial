@@ -44,7 +44,6 @@ public class FragmentShowAd extends Fragment {
       TextView tvTitle = (TextView) rootView.findViewById(R.id.fragment_show_ad_tv_title);
       tvDate.setText(ad.date);
       tvDescription.setText(ad.description);
-      btnLink.setText(ad.linkText);
       tvPrice.setText(ad.price);
       tvTitle.setText(ad.title);
       btnLink.setOnClickListener(new View.OnClickListener() {
