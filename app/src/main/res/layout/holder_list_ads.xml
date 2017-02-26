@@ -48,9 +48,9 @@
 
             <Button
                 android:id="@+id/list_ads_holder_btn_link"
-                android:text="@string/btn_link_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/btn_link_name"
                 android:textSize="10sp"/>
 
             <Button
@@ -61,10 +61,11 @@
 
             <Button
                 android:id="@+id/list_ads_holder_btn_phone_number"
-                android:text="@string/btn_phone_number_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"/>
+                android:text="@string/btn_phone_number_name"
+                android:textSize="10sp"
+                android:visibility="invisible"/>
         </LinearLayout>
 
     </LinearLayout>

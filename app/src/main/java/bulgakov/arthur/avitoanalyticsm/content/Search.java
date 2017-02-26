@@ -20,13 +20,11 @@ public class Search {
    public String sellerTypeKey;
    public int priceFrom;
    public int priceTo;
-   private SharedPreferences prefs;
    //   public String id;
 //   public boolean isNew;
    public int pos;
 
-   public Search(SharedPreferences prefs) {
-      this.prefs = prefs;
+   public Search() {
    }
 
 //   public Search newSearch() {

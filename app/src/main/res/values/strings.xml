@@ -10,11 +10,12 @@
     <string name="title1">Сохраненные поиски</string>
     <string name="title2">Избранные объявления</string>
     <string name="title3">Оценка товара</string>
-    <string name="title4">Настройки</string>
-    <string name="title5">Поиск</string>
-    <string name="title6">Объявления</string>
-    <string name="title7">График</string>
-    <string name="title8">Объявление</string>
+    <string name="title4">Рассылки</string>
+    <string name="title5">Настройки</string>
+    <string name="title6">Поиск</string>
+    <string name="title7">Объявления</string>
+    <string name="title8">График</string>
+    <string name="title9">Объявление</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="location">Местоположение:</string>

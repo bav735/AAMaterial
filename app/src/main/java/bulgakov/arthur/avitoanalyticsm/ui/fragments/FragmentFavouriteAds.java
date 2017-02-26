@@ -42,7 +42,7 @@ public class FragmentFavouriteAds extends Fragment {
                             Bundle savedInstanceState) {
       prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
       View rootView = inflater.inflate(R.layout.fragment_favourite_ads, container, false);
-      adLv = (RecyclerView) rootView.findViewById(R.id.fragment2_layout_rv);
+      adLv = (RecyclerView) rootView.findViewById(R.id.fragment_favourite_ads_layout_rv);
       // use this setting to improve performance if you know that changes
       // in content do not change the layout size of the RecyclerView
       adLv.setHasFixedSize(true);

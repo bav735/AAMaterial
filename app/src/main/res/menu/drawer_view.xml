@@ -21,14 +21,18 @@
             android:title="@string/title3"/>
         <item
             android:id="@+id/nav_4"
-            android:icon="@drawable/ic_action_settings"
+            android:icon="@drawable/ic_discuss"
             android:title="@string/title4"/>
+        <item
+            android:id="@+id/nav_5"
+            android:icon="@drawable/ic_action_settings"
+            android:title="@string/title5"/>
     </group>
 
     <item android:title="Дополнительно">
         <menu>
             <item
-                android:id="@+id/nav_5"
+                android:id="@+id/nav_6"
                 android:icon="@drawable/ic_discuss"
                 android:title="О приложении"/>
         </menu>

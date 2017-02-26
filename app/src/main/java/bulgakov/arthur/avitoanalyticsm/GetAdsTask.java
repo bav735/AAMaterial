@@ -77,7 +77,7 @@ public class GetAdsTask extends AsyncTask<Void, String, String> {
       } catch (Exception e) {
          Log.d(Constants.APP_TAG, e.toString() + " from getAds ");
          if (e.toString().toLowerCase().contains("refused")) {
-            ServiceSearchTracking.sendNotification(null, e.toString());
+            ServiceProcessor.sendNotification(null, e.toString());
             flag = Constants.GET_ADS_REFUSED;
          }
          if (e.toString().contains("Status=404")) {

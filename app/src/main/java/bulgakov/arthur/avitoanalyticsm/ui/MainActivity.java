@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -23,7 +22,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import bulgakov.arthur.avitoanalyticsm.R;
-import bulgakov.arthur.avitoanalyticsm.ServiceSearchTracking;
+import bulgakov.arthur.avitoanalyticsm.ServiceProcessor;
 import bulgakov.arthur.avitoanalyticsm.content.Ad;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentPreferences;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentShowAds;
@@ -165,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
       setContentView(R.layout.activity_main);
       setupToolbar();
       Constants.initialize(getApplicationContext());
-      Utils.initDB(Constants.PHONE_NUMBERS_PARSING_KEY, this);
-      Utils.initDB(Constants.SMS_SENDING_KEY, this);
+      Utils.initDB(Constants.MPN_PARSING_KEY, this);
+//      Utils.initDB(Constants.SMS_SENDING_KEY, this);
       pd = new ProgressDialog(this, R.style.CustomProgressDialog);
       pd.setCancelable(false);
       pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
          }
       });
       intent = getIntent();
-      startService(new Intent(this, ServiceSearchTracking.class));
+      startService(new Intent(this, ServiceProcessor.class));
    }
 
    private void uncheckNavigationView() {

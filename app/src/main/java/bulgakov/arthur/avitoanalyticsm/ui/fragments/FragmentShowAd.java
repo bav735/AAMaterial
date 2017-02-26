@@ -21,8 +21,8 @@ import bulgakov.arthur.avitoanalyticsm.content.Ad;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentShowAd extends Fragment {
-   public final static int FRAGMENT_NUM = 7;
-   public final static String FRAGMENT_TAG = "7";
+   public final static int FRAGMENT_NUM = 8;
+   public final static String FRAGMENT_TAG = "8";
    public Ad ad;
 
    public static Fragment newInstance() {

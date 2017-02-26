@@ -583,7 +583,7 @@ public class Utils {
          case Constants.SAVED_SEARCH_ADS_KEY:
             return Constants.SAVED_SEARCH_ADS_SIZE_KEY;
          default:
-            return Constants.PHONE_NUMBERS_PARSING_SIZE_KEY;
+            return Constants.MPN_PARSING_SIZE_KEY;
       }
    }
 
@@ -951,8 +951,8 @@ public class Utils {
    }
 
    public static String getFileKey(String elemKey) {
-      if (elemKey.equals(Constants.PHONE_NUMBERS_PARSING_KEY))
-         return Constants.PHONE_NUMBERS_PARSING_FILE;
+      if (elemKey.equals(Constants.MPN_PARSING_KEY))
+         return Constants.MPN_PARSING_FILE;
       return Constants.SMS_SENDINGS_FILE;
    }
 
@@ -1003,22 +1003,18 @@ public class Utils {
               }).show();
    }
 
-   public static void saveToDB(Activity activity, String elemKey) {
+   public static void saveToDB(Activity activity, String elemKey) throws IOException {
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
       File db = new File(getAppDir(activity) + "/" + getFileKey(elemKey));
       JSONArray dbJson = new JSONArray();
       for (int i = 0; i < prefs.getInt(getSizeKey(elemKey), 0); i++)
          dbJson.put(prefs.getString(elemKey + i, null));
-      try {
-         FileOutputStream fOut = new FileOutputStream(db);
-         OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-         myOutWriter.append(dbJson.toString());
-         myOutWriter.close();
-         fOut.flush();
-         fOut.close();
-         toast(activity, "сохранение в БД прошло успешно");
-      } catch (IOException e) {
-         Log.d(Constants.APP_TAG, "File write failed: " + e.toString());
-      }
+      FileOutputStream fOut = new FileOutputStream(db);
+      OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+      myOutWriter.append(dbJson.toString());
+      myOutWriter.close();
+      fOut.flush();
+      fOut.close();
+      toast(activity, "сохранение в БД прошло успешно");
    }
 }

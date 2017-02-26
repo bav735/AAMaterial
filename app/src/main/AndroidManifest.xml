@@ -27,7 +27,7 @@
         </activity>
 
         <service
-            android:name=".ServiceSearchTracking"
+            android:name=".ServiceProcessor"
             android:enabled="true">
         </service>
 

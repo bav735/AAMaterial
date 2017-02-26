@@ -47,8 +47,8 @@ import bulgakov.arthur.avitoanalyticsm.utils.Utils;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentShowGraph extends Fragment {
-   public final static int FRAGMENT_NUM = 6;
-   public final static String FRAGMENT_TAG = "6";
+   public final static int FRAGMENT_NUM = 7;
+   public final static String FRAGMENT_TAG = "7";
    public final static int AVITO_RANGE = 30;
    private SharedPreferences prefs;
    public Search search;

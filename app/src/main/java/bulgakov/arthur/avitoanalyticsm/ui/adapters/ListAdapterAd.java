@@ -89,7 +89,7 @@ public class ListAdapterAd extends RecyclerView.Adapter<ListAdapterAd.HolderAd> 
       holder.btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            ad.getPhoneNumber(activity);
+//            ad.getPhoneNumber(activity);
          }
       });
       holder.btnFavourite.setText("Удалить из избранного");

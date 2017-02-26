@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_saved_searches_rv"
+        android:id="@+id/fragment_mpn_parsing_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_saved_searches_fab_add"
+        android:id="@+id/fragment_mpn_parsing_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/regular_offset"
-        android:src="@drawable/ic_plus"
+        android:src="@drawable/ic_done"
         app:layout_behavior="bulgakov.arthur.avitoanalyticsm.ui.FloatingActionButtonBehavior"/>
-
 </android.support.design.widget.CoordinatorLayout>

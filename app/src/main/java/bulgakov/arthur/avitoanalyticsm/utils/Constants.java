@@ -7,6 +7,7 @@ import android.util.Log;
 
 import bulgakov.arthur.avitoanalyticsm.R;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentFavouriteAds;
+import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentMPNParsings;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentMakeMark;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentPreferences;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentSavedSearches;
@@ -16,9 +17,9 @@ import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentShowAds;
 import bulgakov.arthur.avitoanalyticsm.ui.fragments.FragmentShowGraph;
 
 public class Constants {
-   public static final String PHONE_NUMBERS_PARSING_KEY = "phone_numbers_parsing_";
-   public static final String PHONE_NUMBERS_PARSING_SIZE_KEY = "phone_numbers_parsing_size";
-   public static final String PHONE_NUMBERS_PARSING_FILE = "phone_numbers_db.txt";
+   public static final String MPN_PARSING_KEY = "mpn_parsing_";
+   public static final String MPN_PARSING_SIZE_KEY = "mpn_parsing_size";
+   public static final String MPN_PARSING_FILE = "mpn_parsing_db.txt";
 
    public static final String SMS_SENDING_KEY = "sms_sending_";
    public static final String SMS_SENDINGS_SIZE_KEY = "sms_sendings_size";
@@ -525,19 +526,23 @@ public class Constants {
       fragments = new Fragment[]{FragmentSavedSearches.newInstance(),
               FragmentFavouriteAds.newInstance(),
               FragmentMakeMark.newInstance(),
+              FragmentMPNParsings.newInstance(),
               FragmentPreferences.newInstance(),
               FragmentSearch.newInstance(),
               FragmentShowAds.newInstance(),
               FragmentShowGraph.newInstance(),
-              FragmentShowAd.newInstance()};
+              FragmentShowAd.newInstance(),
+      };
       fragmentTags = new String[]{FragmentSavedSearches.FRAGMENT_TAG,
               FragmentFavouriteAds.FRAGMENT_TAG,
               FragmentMakeMark.FRAGMENT_TAG,
+              FragmentMPNParsings.FRAGMENT_TAG,
               FragmentPreferences.FRAGMENT_TAG,
               FragmentSearch.FRAGMENT_TAG,
               FragmentShowAds.FRAGMENT_TAG,
               FragmentShowGraph.FRAGMENT_TAG,
-              FragmentShowAd.FRAGMENT_TAG,};
+              FragmentShowAd.FRAGMENT_TAG,
+      };
       int[] fragmentNamesResId = new int[]{R.string.title1,
               R.string.title2,
               R.string.title3,
@@ -545,11 +550,13 @@ public class Constants {
               R.string.title5,
               R.string.title6,
               R.string.title7,
-              R.string.title8,};
+              R.string.title8,
+              R.string.title9,};
       fragmentMenuItemIds = new int[]{R.id.nav_1,
               R.id.nav_2,
               R.id.nav_3,
-              R.id.nav_4,};
+              R.id.nav_4,
+              R.id.nav_5,};
       fragmentTitles = new String[fragmentNamesResId.length];
       for (int i = 0; i < fragmentTitles.length; i++) {
          fragmentTitles[i] = context.getString(fragmentNamesResId[i]);

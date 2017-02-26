@@ -36,8 +36,8 @@ import butterknife.OnClick;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentSearch extends Fragment {
-   public final static int FRAGMENT_NUM = 4;
-   public final static String FRAGMENT_TAG = "4";
+   public final static int FRAGMENT_NUM = 5;
+   public final static String FRAGMENT_TAG = "5";
    private final String[] titleByTreeHeight = new String[]{"категорию", "подкатегорию", "вид товара"};
    private SharedPreferences prefs;
    private Button btnClearCategory;
@@ -167,7 +167,7 @@ public class FragmentSearch extends Fragment {
 
    @OnClick(R.id.fragment0_layout_fab_done)
    public void onFabClicked(View view) {
-      String prefSearch = new Search(prefs).fromFragmentSearch(this).toJson().toString();
+      String prefSearch = new Search().fromFragmentSearch(this).toJson().toString();
       if (searchFrom == null) {
          Utils.addArrayPref(prefs, Constants.SAVED_SEARCH_KEY, prefSearch);
          Utils.addArrayPref(prefs, Constants.SAVED_SEARCH_ADS_KEY, "");

@@ -30,8 +30,8 @@ import bulgakov.arthur.avitoanalyticsm.utils.Utils;
  * A placeholder fragment containing a simple view.
  */
 public class FragmentShowAds extends Fragment {
-   public final static int FRAGMENT_NUM = 5;
-   public static final String FRAGMENT_TAG = "5";
+   public final static int FRAGMENT_NUM = 6;
+   public static final String FRAGMENT_TAG = "6";
    private SharedPreferences prefs;
    private RecyclerView adLv;
    public ArrayList<Ad> adsList;

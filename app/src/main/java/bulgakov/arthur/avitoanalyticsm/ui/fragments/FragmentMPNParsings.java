@@ -16,37 +16,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import bulgakov.arthur.avitoanalyticsm.R;
-import bulgakov.arthur.avitoanalyticsm.content.Search;
+import bulgakov.arthur.avitoanalyticsm.content.MPNParsing;
 import bulgakov.arthur.avitoanalyticsm.ui.MainActivity;
-import bulgakov.arthur.avitoanalyticsm.ui.adapters.ListAdapterSearch;
+import bulgakov.arthur.avitoanalyticsm.ui.adapters.ListAdapterMPNParsing;
 import bulgakov.arthur.avitoanalyticsm.utils.Constants;
-import bulgakov.arthur.avitoanalyticsm.utils.FragmentProcessor;
+import bulgakov.arthur.avitoanalyticsm.utils.Utils;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentSavedSearches extends Fragment {
-   public final static int FRAGMENT_NUM = 0;
-   public static final String FRAGMENT_TAG = "0";
+public class FragmentMPNParsings extends Fragment {
+   public final static int FRAGMENT_NUM = 3;
+   public static final String FRAGMENT_TAG = "3";
 
-   private RecyclerView searchLv;
+   private RecyclerView mpnParsingRv;
    private SharedPreferences prefs;
 
    public static Fragment newInstance() {
-      return new FragmentSavedSearches();
+      return new FragmentMPNParsings();
    }
 
-   public FragmentSavedSearches() {
+   public FragmentMPNParsings() {
    }
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
-      Log.d(Constants.APP_TAG, "Fragment1 onCreate");
+      Log.d(Constants.APP_TAG, "Fragment8 onCreate");
       super.onCreate(savedInstanceState);
 //      action = getActivity().getIntent().getAction();
    }
@@ -54,27 +55,19 @@ public class FragmentSavedSearches extends Fragment {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      Log.d(Constants.APP_TAG, "Fragment1 onCreatView");
+      Log.d(Constants.APP_TAG, "Fragment8 onCreatView");
       setHasOptionsMenu(true);
       prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-      View rootView = inflater.inflate(R.layout.fragment_saved_searches, container, false);
+      View rootView = inflater.inflate(R.layout.fragment_mpn_parsing, container, false);
       ButterKnife.bind(this, rootView);
-      searchLv = (RecyclerView) rootView.findViewById(R.id.fragment_saved_searches_rv);
+      mpnParsingRv = (RecyclerView) rootView.findViewById(R.id.fragment_mpn_parsing_rv);
       // use this setting to improve performance if you know that changes
       // in content do not change the layout size of the RecyclerView
-      searchLv.setHasFixedSize(true);
+      mpnParsingRv.setHasFixedSize(true);
       // use a linear layout manager for vertical list
       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-      searchLv.setLayoutManager(layoutManager);
+      mpnParsingRv.setLayoutManager(layoutManager);
       return rootView;
-   }
-
-   @OnClick(R.id.fragment_saved_searches_fab_add)
-   public void onFabClicked(View view) {
-      FragmentProcessor fp = new FragmentProcessor(getActivity(), FragmentSearch.FRAGMENT_NUM);
-      FragmentSearch fragment = (FragmentSearch) fp.get();
-      fragment.searchFrom = null;
-      fp.replace(fragment);
    }
 
    @Override
@@ -118,13 +111,25 @@ public class FragmentSavedSearches extends Fragment {
    @Override
    public void onResume() {
       super.onResume();
-      ArrayList<Search> searchList = new ArrayList<>();
-      for (int i = 0; i < prefs.getInt(Constants.SAVED_SEARCH_SIZE_KEY, 0); i++) {
-         Search search = new Search().fromJson(prefs.getString(Constants.SAVED_SEARCH_KEY + i, null));
-         search.pos = i;
-         searchList.add(search);
+      ArrayList<MPNParsing> mpnParsings = new ArrayList<>();
+      for (int i = 0; i < prefs.getInt(Constants.MPN_PARSING_SIZE_KEY, 0); i++) {
+         MPNParsing mpnParsing = new MPNParsing().fromJson(prefs.getString(
+                 Constants.MPN_PARSING_KEY + i, null));
+         mpnParsing.pos = i;
+         mpnParsings.add(mpnParsing);
       }
-      ListAdapterSearch searchAdapter = new ListAdapterSearch((MainActivity) getActivity(), searchList);
-      searchLv.setAdapter(searchAdapter);
+      ListAdapterMPNParsing listAdapterMPNParsing = new ListAdapterMPNParsing((MainActivity) getActivity(), mpnParsings);
+      mpnParsingRv.setAdapter(listAdapterMPNParsing);
+   }
+
+   @OnClick(R.id.fragment_mpn_parsing_fab)
+   public void onFabClicked(View view) {
+      try {
+         Utils.saveToDB(getActivity(), Constants.MPN_PARSING_KEY);
+         Utils.snack(view, "Успешно сохранено");
+      } catch (IOException e) {
+         Utils.snack(view, "Не удалось сохраненить");
+         Log.d(Constants.APP_TAG, e.toString());
+      }
    }
 }
